@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Keyword Search | BM25</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<main class="container">
+    <header>
+        <p class="eyebrow">INFORMATION RETRIEVAL · BM25</p>
+        <h1>PDF Keyword Search</h1>
+        <p class="subtitle">Upload a PDF, then search its contents.</p>
+    </header>
+
+    <section class="panel" aria-labelledby="upload-heading">
+        <h2 id="upload-heading">1. Upload a PDF</h2>
+        <form id="upload-form">
+            <label class="file-label" for="pdf-file">Choose a PDF document</label>
+            <input type="file" id="pdf-file" name="pdf" accept="application/pdf,.pdf" required>
+            <button type="submit" id="upload-button">Upload and Index PDF</button>
+        </form>
+        <p class="hint">PDF only · Maximum size: 25 MB · Scanned image-only PDFs need OCR.</p>
+        <div id="upload-status" class="status" role="status" aria-live="polite"></div>
+        <div class="current-document">
+            <strong>Current document:</strong>
+            <span id="current-document">{{ current_pdf_name or 'No PDF loaded yet' }}</span>
+            <span id="page-count" class="muted">{% if current_pdf_name %}({{ current_page_count }} pages){% endif %}</span>
+        </div>
+    </section>
+
+    <section class="panel" aria-labelledby="search-heading">
+        <h2 id="search-heading">2. Search the document</h2>
+        <form id="search-form">
+            <label class="file-label" for="query">Keyword or phrase</label>
+            <div class="search-row">
+                <input type="search" id="query" placeholder="e.g. machine learning" autocomplete="off" required>
+                <button type="submit" id="search-button">Search</button>
+            </div>
+        </form>
+        <div id="search-status" class="status" role="status" aria-live="polite"></div>
+        <div id="results" aria-live="polite"></div>
+    </section>
+</main>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
